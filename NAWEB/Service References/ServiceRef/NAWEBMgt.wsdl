@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/NAWEBMgt" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/NAWEBMgt" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema xmlns:tns="&lt;urn:microsoft-dynamics-nav/xmlports/NAWEB_Customers&gt;" elementFormDefault="qualified" targetNamespace="&lt;urn:microsoft-dynamics-nav/xmlports/NAWEB_Customers&gt;" xmlns="http://www.w3.org/2001/XMLSchema">
+      <complexType name="Customer">
+        <sequence>
+          <element minOccurs="1" maxOccurs="1" name="No" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="Name" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="Name_2" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="Address" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="Address_2" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="City" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="PostCode" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="CreditLimitLCY" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="CustomerPostingGroup" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="Blocked" type="string" />
+          <element minOccurs="1" maxOccurs="1" name="VisibleForLocations" type="string" />
+        </sequence>
+      </complexType>
+      <complexType name="Customers" mixed="true">
+        <sequence>
+          <element minOccurs="0" maxOccurs="unbounded" name="Customer" type="tns:Customer" />
+        </sequence>
+      </complexType>
+      <element name="Customers" type="tns:Customers" />
+    </schema>
+    <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/NAWEBMgt" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="GetCustomers">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="startingRowNo" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="endingRowNo" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="noFilter" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="nameFilter" type="string" />
+            <element xmlns:q1="&lt;urn:microsoft-dynamics-nav/xmlports/NAWEB_Customers&gt;" minOccurs="1" maxOccurs="1" name="result" type="q1:Customers" />
+            <element minOccurs="1" maxOccurs="1" name="totalRows" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetCustomers_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
+            <element xmlns:q2="&lt;urn:microsoft-dynamics-nav/xmlports/NAWEB_Customers&gt;" minOccurs="1" maxOccurs="1" name="result" type="q2:Customers" />
+            <element minOccurs="1" maxOccurs="1" name="totalRows" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="GetCustomers">
+    <part name="parameters" element="tns:GetCustomers" />
+  </message>
+  <message name="GetCustomers_Result">
+    <part name="parameters" element="tns:GetCustomers_Result" />
+  </message>
+  <portType name="NAWEBMgt_Port">
+    <operation name="GetCustomers">
+      <input name="GetCustomers" message="tns:GetCustomers" />
+      <output name="GetCustomers_Result" message="tns:GetCustomers_Result" />
+    </operation>
+  </portType>
+  <binding name="NAWEBMgt_Binding" type="tns:NAWEBMgt_Port">
+    <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="GetCustomers">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/NAWEBMgt:GetCustomers" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetCustomers">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetCustomers_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="NAWEBMgt">
+    <port name="NAWEBMgt_Port" binding="tns:NAWEBMgt_Binding">
+      <address location="http://main:7047/ElmeMesser71/WS/ElmeMesserL/Codeunit/NAWEBMgt" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>
